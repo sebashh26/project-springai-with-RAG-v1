@@ -1,0 +1,10 @@
+FROM pgvector/pgvector:pg18-trixie
+LABEL maintainer="sebashh26@gmail.com"
+
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=root
+ENV POSTGRES_DB=spring_ai_rag
+
+COPY initialConfigBd/init.sql /docker-entrypoint-initdb.d/01-init.sql
+COPY respaldo_pgvector.sql /docker-entrypoint-initdb.d/02-respaldo.sql
+EXPOSE 5432

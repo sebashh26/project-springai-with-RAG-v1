@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  spring_ai_rag_bd:
+    image: "sebashh26/spring_ai_rag_bd:v1"
+    container_name: postgresvg-rag-bd
+    volumes:
+      - pgdata:/var/lib/postgresql
+    environment:
+      POSTGRES_DB: spring_ai_rag
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 5432:5432
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d spring_ai_rag"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+
+  spring_ai_rag_app:
+    image: "sebashh26/spring_ai_rag_app:v2"
+    environment:
+      #como se defino el nombre del servicio de la bd
+      DB_HOST: spring_ai_rag_bd
+      DB_PASSWORD: ${DB_PASSWORD}
+      OLLAMA_URL: http://host.docker.internal:11434
+      CHAT_MODEL: ${CHAT_MODEL}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    depends_on:
+      spring_ai_rag_bd:
+        condition: service_healthy
+    # entrypoint: java -jar /workspace/app.jar
+
+volumes:
+  pgdata:
