@@ -1,0 +1,75 @@
+{
+  "info": {
+    "_postman_id": "907f8181-4094-4991-b26d-ca3668ac8199",
+    "name": "IA-RAG",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "10706640",
+    "_collection_link": "https://go.postman.co/collection/10706640-907f8181-4094-4991-b26d-ca3668ac8199?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "RAG",
+      "item": [
+        {
+          "name": "indexar mi pdf",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [
+                    "Banco Andino guía resumida.pdf"
+                  ]
+                }
+              ]
+            },
+            "url": {
+              "raw": "localhost:8080/index-upload/pdf",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "index-upload",
+                "pdf"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "preguntar al rag",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "Optional<CuentaBancaria> ctaBD = this.cuentaBancariaDao.findById(c.getCodigo());\r\n\t\t\tCuentaBancaria tmp = ctaBD.isPresent() ? ctaBD.get() : CuentaBancaria.builder()\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.cliente(c.getCliente())\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.codigo(c.getCodigo())\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.isActivo(true)\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.saldo(c.getSaldo())\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.build();\r\n\r\n\t\t\tthis.cuentaBancariaDao.save(tmp);",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/rag/ask",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "rag",
+                "ask"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

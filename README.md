@@ -150,9 +150,9 @@ Al subir el PDF, cada fragmento pasa por `nomic-embed-text` y se guarda en la co
 La forma más corta de levantar el proyecto:
 
 ```bash
-git clone <url-de-tu-repositorio>
-cd <carpeta-del-proyecto>
-docker compose -f docker-compose-ai-rag.yml up --build
+git clone http://github.com/sebashh26/project-springai-with-RAG-v1
+cd springai-rag
+docker compose -f docker-compose-ai-rag.yml up
 ```
 
 Antes de ejecutarlo, comprueba que **Ollama está abierto** y que los dos modelos están descargados (`ollama list`).
@@ -293,6 +293,9 @@ Con `curl`:
 ```bash
 curl -X POST http://localhost:8080/index-upload/pdf -F "file=@mi-documento.pdf"
 ```
+#### 📥 Probar con collection de postman
+* Importar de la carpeta Collection-postman la collection en postman
+* En la capeta document-bank se encuentra un archivo que describe las actividades y los que ofrece un Banco de ejemplo, los puede cargar en la peticón de indexar pdf para que tome la información de la consulta de ese archivo
 
 ### 💬 Hacer una pregunta
 
